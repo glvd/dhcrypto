@@ -12,3 +12,10 @@ func TestSaveTable(t *testing.T) {
 	MakeTable()
 	t.Log(SaveTable("ciphertable.txt"))
 }
+
+// TestGetCipher ...
+func TestGetCipher(t *testing.T) {
+	for i := 2046; i < 2056; i++ {
+		t.Log(GetCipher(i, 16))
+	}
+}

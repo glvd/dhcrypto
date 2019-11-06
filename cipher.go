@@ -17,6 +17,16 @@ type cipherJSON struct {
 	Index int
 }
 
+// Encode ...
+func (c cipherJSON) Encode(s string) ([]byte, error) {
+	return nil, nil
+}
+
+// NewCipherEncoder ...
+func NewCipherEncoder(i int) Encoder {
+	return cipherJSON{Index: i}
+}
+
 // Encoder ...
 type Encoder interface {
 	Encode(s string) ([]byte, error)
@@ -51,4 +61,13 @@ func SaveTable(path string) error {
 // TimeToTS ...
 func TimeToTS(t time.Time) string {
 	return t.Format(TimeStampFormat)
+}
+
+// GetCipher ...
+func GetCipher(index, limit int) string {
+	size := len(cipherTable)
+	if index+limit >= len(cipherTable) {
+		return cipherTable[index:] + GetCipher(0, index+limit-size)
+	}
+	return cipherTable[index : index+limit]
 }
