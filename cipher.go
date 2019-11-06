@@ -1,4 +1,4 @@
-package crypto
+package dhcrypto
 
 import (
 	"crypto/rand"
@@ -19,6 +19,19 @@ type RSA struct {
 	privateKey *rsa.PrivateKey
 	//publicKey []byte
 	publicKey *rsa.PublicKey
+}
+
+func (r *RSA) Decode(s string) ([]byte, error) {
+	t, err := Base64Decode([]byte(s))
+	if err != nil {
+		return nil, err
+	}
+
+	b, err := rsa.DecryptOAEP(sha1.New(), rand.Reader, r.privateKey, t, nil)
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
 }
 
 func (r *RSA) Encode(s string) ([]byte, error) {

@@ -1,3 +1,3 @@
-module crypto
+module dhcrypto
 
 go 1.13

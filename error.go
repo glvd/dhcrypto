@@ -1,4 +1,4 @@
-package crypto
+package dhcrypto
 
 import "errors"
 
