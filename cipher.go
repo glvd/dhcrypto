@@ -12,6 +12,11 @@ import (
 )
 
 type Encoder interface {
+	Encode(s string) ([]byte, error)
+}
+
+type Decoder interface {
+	Decode(s string) ([]byte, error)
 }
 
 type RSA struct {
@@ -45,30 +50,35 @@ func (r *RSA) Encode(s string) ([]byte, error) {
 	return buf, nil
 }
 
-func (r *RSA) LoadPublic(path string) error {
+func LoadPublicRSAFromFile(path string) (Encoder, error) {
 	bytes, e := ioutil.ReadFile(path)
 	if e != nil {
-		return e
+		return nil, e
 	}
 	key, e := parseRSAPublicKeyFromPEM(bytes)
 	if e != nil {
-		return e
+		return nil, e
 	}
-	r.publicKey = key
-	return nil
+	return &RSA{
+		privateKey: nil,
+		publicKey:  key,
+	}, nil
 }
 
-func (r *RSA) LoadPrivate(path string) error {
+func LoadPrivateRSAFromFile(path string) (Decoder, error) {
 	bytes, e := ioutil.ReadFile(path)
 	if e != nil {
-		return e
+		return nil, e
 	}
 	key, e := parseRSAPrivateKeyFromPEM(bytes)
 	if e != nil {
-		return e
+		return nil, e
 	}
-	r.privateKey = key
-	return nil
+
+	return &RSA{
+		privateKey: key,
+		publicKey:  nil,
+	}, nil
 }
 
 /*ParseRSAPrivateKeyFromPEM Parse PEM encoded PKCS1 or PKCS8 private key */
