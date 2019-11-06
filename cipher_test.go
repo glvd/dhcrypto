@@ -10,6 +10,12 @@ func TestRSA_LoadPrivate(t *testing.T) {
 	if rsa.privateKey == nil {
 		t.Failed()
 	}
+	rlt, err := rsa.Encode("abcdefg")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Log(string(rlt))
+
 }
 
 func TestRSA_LoadPublic(t *testing.T) {
