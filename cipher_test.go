@@ -55,5 +55,5 @@ func TestNewCipherDecode(t *testing.T) {
 		t.Error(e)
 	}
 	t.Log(string(bytes))
-	//output:abdefg
+	//output:/ip4/127.0.0.1/tcp/14001/ipfs/QmRnCapPN73gDHRhnmKD8VbFjsqdF6Y5adzihwbjULaTcx
 }
