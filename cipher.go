@@ -67,8 +67,8 @@ func TimeToTS(t time.Time) string {
 func GetCipher(index, limit int) string {
 	size := len(cipherTable)
 	index = index % 2048
-	if index+limit >= len(cipherTable)-1 {
-		return cipherTable[index:] + GetCipher(0, index+limit-size)
+	if index+limit >= size {
+		return cipherTable[index:size] + GetCipher(0, index+limit-size)
 	}
 	return cipherTable[index : index+limit]
 }

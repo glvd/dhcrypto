@@ -15,7 +15,7 @@ func TestSaveTable(t *testing.T) {
 
 // TestGetCipher ...
 func TestGetCipher(t *testing.T) {
-	for i := 2032; i < 2056; i++ {
+	for i := 3162; i < 3499; i++ {
 		t.Log(GetCipher(i, 16))
 	}
 }
