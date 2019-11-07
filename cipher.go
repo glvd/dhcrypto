@@ -20,7 +20,7 @@ type cipherJSON struct {
 	rsaKey    []byte
 	Data      []byte
 	Index     int
-	Timestamp int64
+	timestamp int64
 }
 
 // Decode ...
@@ -38,8 +38,8 @@ func (c cipherJSON) Decode(s string) ([]byte, error) {
 	if e != nil {
 		return nil, e
 	}
-	Output("cipher:decode:json", string(c.Data), c.Index, c.Timestamp)
-	t := time.Unix(c.Timestamp, 0)
+	Output("cipher:decode:json", string(c.Data), c.Index, c.timestamp)
+	t := time.Unix(c.timestamp, 0)
 	Output("cipher:decode:ts", t.Format(TimeStampFormat))
 	key := GetCipher(c.Index, 16)
 	Output("cipher:decode:key", key)
@@ -53,7 +53,7 @@ func (c cipherJSON) Decode(s string) ([]byte, error) {
 
 // Encode ...
 func (c cipherJSON) Encode(s string) ([]byte, error) {
-	t := time.Unix(c.Timestamp, 0)
+	t := time.Unix(c.timestamp, 0)
 	Output("cipher:encode:ts", t.Format(TimeStampFormat))
 	key := GetCipher(c.Index, 16)
 	Output("cipher:encode:key", key)
@@ -63,7 +63,7 @@ func (c cipherJSON) Encode(s string) ([]byte, error) {
 		return nil, e
 	}
 	c.Data = bytes
-	Output("cipher:encode:json", string(c.Data), c.Index, c.Timestamp)
+	Output("cipher:encode:json", string(c.Data), c.Index)
 	marshaled, e := json.Marshal(c)
 	if e != nil {
 		return nil, e
@@ -78,12 +78,12 @@ func (c cipherJSON) Encode(s string) ([]byte, error) {
 
 // NewCipherEncoder ...
 func NewCipherEncoder(rsaKey []byte, i int, t time.Time) Encoder {
-	return cipherJSON{rsaKey: rsaKey, Index: i, Timestamp: t.Unix()}
+	return cipherJSON{rsaKey: rsaKey, Index: i, timestamp: t.Unix()}
 }
 
 // NewCipherDecode ...
-func NewCipherDecode(rsaKey []byte) Decoder {
-	return cipherJSON{rsaKey: rsaKey}
+func NewCipherDecode(rsaKey []byte, t time.Time) Decoder {
+	return cipherJSON{rsaKey: rsaKey, timestamp: t.Unix()}
 }
 
 // Encoder ...
