@@ -17,6 +17,7 @@ const TimeStampFormat = "20060102"
 var cipherTable = `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`
 
 type cipherJSON struct {
+	rsaKey    []byte
 	Data      []byte
 	Index     int
 	Timestamp int64
@@ -24,11 +25,16 @@ type cipherJSON struct {
 
 // Decode ...
 func (c cipherJSON) Decode(s string) ([]byte, error) {
-	byteS, e := Base64DecodeString(s)
+	Output("cipher:decode:private\n", string(c.rsaKey))
+	decoder, e := LoadPrivateRSAFromBytes(c.rsaKey)
 	if e != nil {
 		return nil, e
 	}
-	e = json.Unmarshal(byteS, &c)
+	decoded, e := decoder.Decode(s)
+	if e != nil {
+		return nil, e
+	}
+	e = json.Unmarshal(decoded, &c)
 	if e != nil {
 		return nil, e
 	}
@@ -57,22 +63,27 @@ func (c cipherJSON) Encode(s string) ([]byte, error) {
 		return nil, e
 	}
 	c.Data = bytes
-	Output("cipher:decode:json", string(c.Data), c.Index, c.Timestamp)
+	Output("cipher:encode:json", string(c.Data), c.Index, c.Timestamp)
 	marshaled, e := json.Marshal(c)
 	if e != nil {
 		return nil, e
 	}
-	return Base64Encode(marshaled), nil
+	Output("cipher:encode:public\n", string(c.rsaKey))
+	encoder, e := LoadPublicRSAFromBytes(c.rsaKey)
+	if e != nil {
+		return nil, e
+	}
+	return encoder.Encode(string(marshaled))
 }
 
 // NewCipherEncoder ...
-func NewCipherEncoder(i int, t time.Time) Encoder {
-	return cipherJSON{Index: i, Timestamp: t.Unix()}
+func NewCipherEncoder(rsaKey []byte, i int, t time.Time) Encoder {
+	return cipherJSON{rsaKey: rsaKey, Index: i, Timestamp: t.Unix()}
 }
 
 // NewCipherDecode ...
-func NewCipherDecode() Decoder {
-	return cipherJSON{}
+func NewCipherDecode(rsaKey []byte) Decoder {
+	return cipherJSON{rsaKey: rsaKey}
 }
 
 // Encoder ...

@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
+// TestRSA_LoadPrivate ...
 func TestRSA_LoadPrivate(t *testing.T) {
 	dec, err := LoadPrivateRSAFromFile("./test_key/private.pem")
 	if err != nil {
@@ -17,13 +18,14 @@ func TestRSA_LoadPrivate(t *testing.T) {
 	//output:abcdefg
 }
 
+// TestRSA_LoadPublic ...
 func TestRSA_LoadPublic(t *testing.T) {
 	enc, err := LoadPublicRSAFromFile("./test_key/rsa.crt")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	rlt, err := enc.Encode("abcdefg")
+	rlt, err := enc.Encode("eyJEYXRhIjoiNkRnQjI2WE9Eb01OK0FjSUgwOUZ2UkZCT3NMT1J3eGFXbjVnVkVZd2pVbz0iLCJJbmRleCI6NDk5OSwiVGltZXN0YW1wIjoxNTczMTA1MzM2fQ==")
 	if err != nil {
 		t.Fatal(err)
 	}
