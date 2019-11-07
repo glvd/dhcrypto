@@ -2,11 +2,14 @@ package dhcrypto
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"time"
 
 	"github.com/goextension/tool"
 )
+
+var debug = false
 
 // TimeStampFormat ...
 const TimeStampFormat = "20060102"
@@ -21,14 +24,21 @@ type cipherJSON struct {
 
 // Decode ...
 func (c cipherJSON) Decode(s string) ([]byte, error) {
-	var tmp cipherJSON
-	e := json.Unmarshal(c.Data, &tmp)
+	byteS, e := Base64DecodeString(s)
 	if e != nil {
 		return nil, e
 	}
+	e = json.Unmarshal(byteS, &c)
+	if e != nil {
+		return nil, e
+	}
+	Output("cipher:decode:json", string(c.Data), c.Index, c.Timestamp)
 	t := time.Unix(c.Timestamp, 0)
-	dec := NewAESDecode(GetCipher(tmp.Index, 16), t)
-	bytes, e := dec.Decode(string(tmp.Data))
+	Output("cipher:decode:ts", t.Format(TimeStampFormat))
+	key := GetCipher(c.Index, 16)
+	Output("cipher:decode:key", key)
+	dec := NewAESDecode(key, t)
+	bytes, e := dec.Decode(string(c.Data))
 	if e != nil {
 		return nil, e
 	}
@@ -38,28 +48,31 @@ func (c cipherJSON) Decode(s string) ([]byte, error) {
 // Encode ...
 func (c cipherJSON) Encode(s string) ([]byte, error) {
 	t := time.Unix(c.Timestamp, 0)
-
-	enc := NewAESEncoder(GetCipher(c.Index, 16), t)
+	Output("cipher:encode:ts", t.Format(TimeStampFormat))
+	key := GetCipher(c.Index, 16)
+	Output("cipher:encode:key", key)
+	enc := NewAESEncoder(key, t)
 	bytes, e := enc.Encode(s)
 	if e != nil {
 		return nil, e
 	}
 	c.Data = bytes
-	marshal, e := json.Marshal(c)
+	Output("cipher:decode:json", string(c.Data), c.Index, c.Timestamp)
+	marshaled, e := json.Marshal(c)
 	if e != nil {
 		return nil, e
 	}
-	return marshal, nil
+	return Base64Encode(marshaled), nil
 }
 
 // NewCipherEncoder ...
 func NewCipherEncoder(i int, t time.Time) Encoder {
-	return cipherJSON{Index: i, Timestamp: t.UnixNano()}
+	return cipherJSON{Index: i, Timestamp: t.Unix()}
 }
 
 // NewCipherDecode ...
-func NewCipherDecode(s string) Decoder {
-	return cipherJSON{Data: []byte(s)}
+func NewCipherDecode() Decoder {
+	return cipherJSON{}
 }
 
 // Encoder ...
@@ -106,4 +119,11 @@ func GetCipher(index, limit int) string {
 		return cipherTable[index:size] + GetCipher(0, index+limit-size)
 	}
 	return cipherTable[index : index+limit]
+}
+
+// Output ...
+func Output(v ...interface{}) {
+	if debug {
+		fmt.Println(v...)
+	}
 }
