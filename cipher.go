@@ -18,9 +18,9 @@ var cipherTable = `Gv4ZBsANXWZxUVHREK0JGTp4T1WUZcYfWGa6OGh2y65NyX0oX1y93869yW9GH
 
 type cipherJSON struct {
 	rsaKey    []byte
+	timestamp int64
 	Data      []byte
 	Index     int
-	timestamp int64
 }
 
 // Decode ...
