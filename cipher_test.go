@@ -1,6 +1,7 @@
 package dhcrypto
 
 import (
+	"encoding/base64"
 	"io/ioutil"
 	"testing"
 	"time"
@@ -65,4 +66,33 @@ func TestNewCipherDecode(t *testing.T) {
 	}
 	t.Log(string(bytes))
 	//output:/ip4/127.0.0.1/tcp/14001/ipfs/QmRnCapPN73gDHRhnmKD8VbFjsqdF6Y5adzihwbjULaTcx
+}
+
+// TestBase64Encode ...
+func TestBase64Encode(t *testing.T) {
+	t.Log(string(Base64Encode([]byte("/ip4/127.0.0.1/tcp/ 14001/ \nipfs/ QmRnCapPN73gDHRhnmKD8VbFjsqdF6Y5adzihwbjULaTcx"))))
+	t.Log(base64.RawStdEncoding.EncodeToString([]byte("/ip4/127.0.0.1/tcp/ 14001/ \nipfs/ QmRnCapPN73gDHRhnmKD8VbFjsqdF6Y5adzihwbjULaTcx")))
+	t.Log(base64.URLEncoding.EncodeToString([]byte("/ip4/127.0.0.1/tcp/ 14001/ \nipfs/ QmRnCapPN73gDHRhnmKD8VbFjsqdF6Y5adzihwbjULaTcx")))
+	t.Log(base64.RawURLEncoding.EncodeToString([]byte("/ip4/127.0.0.1/tcp/ 14001/ \nipfs/ QmRnCapPN73gDHRhnmKD8VbFjsqdF6Y5adzihwbjULaTcx")))
+}
+
+// TestNewCipherDecode2 ...
+func TestNewCipherDecodeETH(t *testing.T) {
+	s := `IraOAjhxuuQYuTfYQsbQ90aetg/AKYO82Ro4JTe17QZkAwRoO79cob0z2RtK1/YtoNyMFzoxgTIegLflimIQmjAnP9we7vytdS3tC50Y7TlbuquUvpZsWpGTJ+dFhY2f2817zTz9aG+diHLho23UZXrEjHmeiw3+a/Zc0GSfiC4a2Y0mSiG7TEBAuY5qaQ+xC5DI15B184qEwckbmIkEG7m0uI7arcnBrBzufkqrUM6nXongVfYigauKksx4feM0N1vCtVo+WjDAZLRaXlQuPgsXCObZsI+NX7b15FxzFD/YfQKlpFUmzbRknMO1VGkH+jymkMXZE307XKMHjHD8WRJeTR6a2mSL71BMFOkDtliaLQHFIsexofNZoxrlBE4GWmwzUubdYBWcoHEiAx6G6vajzCUlRdI3D6fhbzdPV1usDXtY9+xCivqxv6x10HB7O9gL5Z9hgA8OXzXG/+YuJAivJ3DU+5urhL2J77j30P7gh9sv1HTUbsTdFHpKvkVvGFAhTgTzaU74fbPPwQA047b/weRd1aDJucg8DvN19Ftju1XnlmcFQPKg4qiX3aKhIu7iVFF5fNlQL1KOQ74W8Q/ynSByzjbSuxOhWRUpEGy/h1MNaI9bJlXMMptLHWLjTfXWjZYF8pSmD1rBUKR66gPkqd5TpulV2aqaikbJc8Q=`
+	privateKey, e := ioutil.ReadFile("./test_key/private.pem")
+	if e != nil {
+		t.Error(e)
+	}
+	//tm, err := time.Parse(TimeStampFormat, "20191107")
+	//if err != nil {
+	//	return
+	//}
+	tm := time.Unix(1573205547, 0)
+	dec := NewCipherDecode(privateKey, tm)
+	bytes, e := dec.Decode(s)
+	if e != nil {
+		t.Error(e)
+	}
+	t.Log(string(bytes))
+
 }
