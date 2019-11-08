@@ -39,10 +39,7 @@ func (r *RSA) Encode(s string) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("EncryptOAEP error:%w", err)
 	}
-
-	buf := make([]byte, base64.StdEncoding.EncodedLen(len(part)))
-	base64.StdEncoding.Encode(buf, part)
-	return buf, nil
+	return Base64Encode(part), nil
 }
 
 // LoadPublicRSAFromBytes ...
