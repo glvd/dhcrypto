@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "crypto.h"
 
-int test_main() {
+int main() {
     char *key = "-----BEGIN RSA PRIVATE KEY-----\n"
                 "MIIJKQIBAAKCAgEAxlVkL8ePTNkijdxef2onC4ccmnvHx7d4Vym0IuIUqZ2QFNFU\n"
                 "Yw/IMT31UFIqegeW5TGs9a43cEBLNNgCyTEKsouPW5ZjSo4c8CeONRdIW9GsRQk0\n"

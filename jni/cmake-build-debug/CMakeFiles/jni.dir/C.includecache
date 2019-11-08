@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-D:/workspace/golang/project/crypto/jni/crypto.h
+D:/workspace/golang/project/dhcrypto/jni/crypto.h
 stddef.h
 -
 
-D:/workspace/golang/project/crypto/jni/main.c
+D:/workspace/golang/project/dhcrypto/jni/main.c
 stdio.h
 -
 crypto.h
-D:/workspace/golang/project/crypto/jni/crypto.h
+D:/workspace/golang/project/dhcrypto/jni/crypto.h
 

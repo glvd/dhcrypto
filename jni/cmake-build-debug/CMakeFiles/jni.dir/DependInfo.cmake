@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "D:/workspace/golang/project/crypto/jni/main.c" "D:/workspace/golang/project/crypto/jni/cmake-build-debug/CMakeFiles/jni.dir/main.c.obj"
+  "D:/workspace/golang/project/dhcrypto/jni/main.c" "D:/workspace/golang/project/dhcrypto/jni/cmake-build-debug/CMakeFiles/jni.dir/main.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
