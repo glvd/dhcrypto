@@ -25,7 +25,7 @@ func (r *RSA) Decode(s string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	Output("rsa:decode:length", len(t))
 	b, err := rsa.DecryptOAEP(sha1.New(), rand.Reader, r.privateKey, t, nil)
 	if err != nil {
 		return nil, err
