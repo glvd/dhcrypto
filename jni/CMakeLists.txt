@@ -4,13 +4,11 @@ project(jni C)
 set(CMAKE_C_STANDARD 11)
 
 include_directories(.)
-link_directories(.)
-link_libraries(./crypto.a)
+#link_directories("D:\\workspace\\golang\\project\\dhcrypto\\jni")
+link_libraries("D:\\workspace\\golang\\project\\dhcrypto\\jni\\crypto.so")
 
 add_executable(jni
         crypto.h
         main.c)
 
-
-#add_library(crypto SHARED)
-target_link_libraries(${PROJECT_NAME} crypto)
+target_link_libraries(${PROJECT_NAME})

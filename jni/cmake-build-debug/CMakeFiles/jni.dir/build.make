@@ -79,6 +79,7 @@ jni_EXTERNAL_OBJECTS =
 
 jni.exe: CMakeFiles/jni.dir/main.c.obj
 jni.exe: CMakeFiles/jni.dir/build.make
+jni.exe: ../crypto.so
 jni.exe: CMakeFiles/jni.dir/linklibs.rsp
 jni.exe: CMakeFiles/jni.dir/objects1.rsp
 jni.exe: CMakeFiles/jni.dir/link.txt
