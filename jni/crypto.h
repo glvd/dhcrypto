@@ -69,9 +69,9 @@ extern "C" {
 #endif
 
 
-//NewCipherDecodeJNI ...
+//CipherDecodeJNI ...
 
-extern char* NewCipherDecodeJNI(char* p0, long int p1, char* p2);
+extern char* CipherDecodeJNI(char* p0, long int p1);
 
 #ifdef __cplusplus
 }

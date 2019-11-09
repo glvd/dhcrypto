@@ -1,3 +1,0 @@
-D:/workspace/golang/project/dhcrypto/jni/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/workspace/golang/project/dhcrypto/jni/cmake-build-debug/CMakeFiles/jni.dir
-D:/workspace/golang/project/dhcrypto/jni/cmake-build-debug/CMakeFiles/rebuild_cache.dir
