@@ -5,6 +5,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"fmt"
 	"io"
 	"time"
 )
@@ -37,6 +38,7 @@ func (a AES) Decode(s string) ([]byte, error) {
 		panic("ciphertext too short")
 	}
 	iv := ciphertext[:aes.BlockSize]
+	Output("aes:decode:iv", fmt.Sprintf("%x", iv))
 	ciphertext = ciphertext[aes.BlockSize:]
 
 	// CBC mode always works in whole blocks.
@@ -97,5 +99,8 @@ func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 func PKCS7UnPadding(plantText []byte) []byte {
 	length := len(plantText)
 	unpadding := int(plantText[length-1])
+	if unpadding < 1 || unpadding > 32 {
+		unpadding = 0
+	}
 	return plantText[:(length - unpadding)]
 }

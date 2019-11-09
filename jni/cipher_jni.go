@@ -1,4 +1,3 @@
-//go:generate go build -buildmode=c-shared -o crypto.so ./jni
 package main
 
 import "C"
