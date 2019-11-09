@@ -3,6 +3,7 @@ package main
 
 import "C"
 import (
+	"fmt"
 	"time"
 
 	"dhcrypto"
@@ -70,9 +71,11 @@ func CipherDecodeJNI(s *C.char, ts C.long) *C.char {
 	decoder := dhcrypto.NewCipherDecode([]byte(key), tm)
 	bytes, e := decoder.Decode(dec)
 	if e != nil {
+		fmt.Println("error:", e)
 		return nil
 	}
 	str := string(bytes)
+	fmt.Println("decoded:", str)
 	return C.CString(str)
 }
 

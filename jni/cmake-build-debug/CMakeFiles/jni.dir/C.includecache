@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../crypto.h
+stddef.h
+-
+
+D:/workspace/golang/project/crypto/jni/decode/main.c
+stdio.h
+-
+crypto.h
+D:/workspace/golang/project/crypto/jni/decode/crypto.h
+
