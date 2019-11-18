@@ -1,4 +1,4 @@
-module dhcrypto
+module servcie.code/dhcrypto
 
 go 1.13
 
