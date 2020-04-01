@@ -1,7 +1,7 @@
 package cipher
 
 import (
-	"dhcrypto"
+	"bug.vlavr.com/godcong/dhcrypto"
 	"fmt"
 	"time"
 )

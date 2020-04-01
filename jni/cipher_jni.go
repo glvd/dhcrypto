@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"dhcrypto"
+	"bug.vlavr.com/godcong/dhcrypto"
 )
 
 const key = `-----BEGIN RSA PRIVATE KEY-----
