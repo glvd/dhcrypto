@@ -1,4 +1,4 @@
-module bug.vlavr.com/godcong/dhcrypto
+module github.com/glvd/dhcrypto
 
 go 1.13
 
